@@ -20,7 +20,6 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="login.html">Login</a></li>
-                <li><a href="https://google.com">Google</a></li>
             </ul>
         </div>
     </nav>
@@ -99,11 +98,9 @@
 <!--This is a Semantic HTML Change-->        
                 <article>
                     <div class="text-box">
-                        <h1>Results</h1>
+                        <h1>Update Budget</h1>
                         <p>
-                            People who stick to a financial plan, budgeting every expense, get out of debt faster!
-                            Also, they to live happier lives... since they expend without guilt or fear... 
-                            because they know it is all good and accounted for.
+
                         </p>
                     </div>
                 </article>
@@ -136,25 +133,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
 
     <script>
+        let colorArray = [];
         var dataSource = {
             datasets: [
                 {
-                    data: [1,2,3,4,5],
-                    backgroundColor: [
-                        '#0048BA',
-                        '#FFBF00',
-                        '#008000',
-                        '#660000',
-                        '#004225',
-                        '#58427C',
-                        '#FF8C00'
-                ],
-            }
-        ],
-        labels: [
-            'label1',
-            'label2'
-        ]
+                    data: [ 
+                        1, 2, 3, 4, 5, 6, 7 
+                    ],   
+                    backgroundColor: colorArray
+                }],
+            labels: [
+                1, 2, 3, 4, 5, 6, 7
+         ]
     };
 
     function createChart() {
@@ -169,13 +159,24 @@
         axios.get('http://localhost:3000/budget')
         .then(function (res) {
             console.log(res.data);
-             for (var i = 0; i < res.data.myBudget.length; i++) {
-                dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
-                dataSource.labels[i] = res.data.myBudget[i].title;
+            for (var i = 0; i < res.data.length; i++) {
+                dataSource.datasets[0].data[i] = res.data[i].budget;
+                dataSource.labels[i] = res.data[i].title;
+                colorArray[i] = res.data[i].color;
             }
             createChart();
         });
     }
+
+    function updateBudget() {
+        let document;
+        axios.get('http://localhost:3000/update')
+             .then(function (res) {
+                 console.log(res);
+             })
+
+    }
+
     getBudget();
     </script>
 
