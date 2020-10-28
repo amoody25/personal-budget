@@ -99,9 +99,15 @@
                 <article>
                     <div class="text-box">
                         <h1>Update Budget</h1>
-                        <p>
-
-                        </p>
+                        <label for="idInput">ID Value: </label>
+                        <input type="text" id="idInput" name="idInput"><br><br>
+                        <label for="valueInput">Budget Value: </label>
+                        <input type="text" id="valueInput" name="valueInput"><br><br>
+                        <label for="budgetNameInput">Budget Item Name: </label>
+                        <input type="text" id="budgetNameInput" name="budgetNameInput"><br><br>
+                        <label for="colorInput">Color Value: </label>
+                        <input type="text" id="colorInput" name="colorInput"><br><br>
+                        <button onclick="insertBudget()" type="submit" id="submitDocument" name="submitDocument">Update Budget</button>
                     </div>
                 </article>
 <!--This is a Semantic HTML Change-->
@@ -168,15 +174,27 @@
         });
     }
 
-    function updateBudget() {
-        let document;
-        axios.get('http://localhost:3000/update')
-             .then(function (res) {
-                 console.log(res);
-             })
+    function insertBudget() {
+        const idInput = document.getElementById('idInput').value;
+        const titleInput = document.getElementById('budgetNameInput').value;
+        const budgetInput = document.getElementById('valueInput').value;
+        const colorInput = document.getElementById('colorInput').value;
 
+        axios.post('http://localhost:3000/insert', {
+            
+                id: idInput,
+                title: titleInput,
+                budget: budgetInput,
+                color: colorInput
+           
+         })
+         .then((response) => {
+             console.log(response);was
+         })
+         .catch((error) => {
+             console.log(error);
+         })
     }
-
     getBudget();
     </script>
 
